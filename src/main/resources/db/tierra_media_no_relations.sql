@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `cargos_tierra_media` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `cargos_tierra_media`; 
+CREATE DATABASE  IF NOT EXISTS `modulo13itacademy`/*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `modulo13itacademy`;
 
 
 DROP TABLE IF EXISTS `empleados`;
