@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: head">
+</head>
+
+<body>
+	<header th:replace="plantilla/template :: header"></header>
+
+	<div class="container">
+
+		<div class="card bg-light">
+			<div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<!--th:object : Objeto EmpleadoDTO que recibe del Model
+					th:action : la accion que realiza el boton del formulario
+					method    : el tipo de accion que realiza el boton -->
+					
+				<form th:action="@{/views/empleados/save}" th:object="${empleado}" method="POST"> 
+				
+				<!--Cada uno de estos campos del formulario tiene que tener un th:field con los campos del objeto que recibe-->
+				
+					<div class="form-group row">
+						<input type="hidden" th:field="*{id}">	<!--Indicamos el ID para que Spring reconozca que es el mismo objeto y no cree otro nuevo-->
+						<label class="col-md-2" for="nombres">Nombre: </label>
+						<input type="text" th:field="*{nombre}" class="form-control form-control-sm col-md-6" id="nombre"
+							placeholder="Nombre del empleado">
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+							th:errors="*{nombre}">
+						</small>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-2" for="apellido">Apellido: </label>
+						<input type="text" th:field="*{apellido}"class="form-control form-control-sm col-md-6" id="apellido"
+							placeholder="Apellido del empleado">
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}"
+							th:errors="*{apellido}">
+						</small>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-2" for="puesto">Puesto: </label>
+						<select th:field="*{nombrePuesto}" class="form-control form-control-sm col-md-6" id="puesto">
+							<option th:each="puesto: ${T(es.david.core.models.entities.PuestosEnum).values()}"  
+								th:value="${puesto.nombrePuesto}"
+								th:text="${puesto.nombrePuesto}"
+							/>
+						</select>
+					</div>
+
+
+					<div class="card-footer bg-dark">
+						<input type="submit" class="btn btn-primary btn-sm" value="Guardar"/>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="plantilla/template :: footer"></footer>
+</body>
+
+</html>

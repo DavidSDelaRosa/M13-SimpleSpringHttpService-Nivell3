@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: head">
+</head>
+
+<body>
+	<header th:replace="plantilla/template :: header"></header>
+
+	<div class="p-3 mb-2  bg-light text-dark">
+		<div class="container">
+			<h1 th:text="${titulo}"></h1>
+		</div>
+
+		<div class="container">
+
+			<form th:action="@{/views/empleados/buscar/{id}}" method="get">
+					<input id="buscarPorId" type="number" name="id">
+					<button type="submit">Buscar empleados por ID</button>
+			</form>
+			<br>
+			<form th:action="@{/views/empleados/buscar_por_sueldo/{sueldo}}" method="get">
+					<input id="buscarPorSueldo" type="text" name="sueldo">
+					<button type="submit">Buscar empleados por sueldo</button>
+			</form>
+			<br>
+			<form th:action="@{/views/empleados/buscar_por_puesto}" method="get">
+					<input id="puesto" type="text" name="puesto">
+					<button type="submit">Buscar empleados por puesto</button>
+			</form>
+			<br>
+			<table class="table ">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Apellido</th>
+						<th scope="col">Puesto</th>
+						<th scope="col">Salario</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="emp: ${empleados}">
+						<!--este 'clientes' viene del Model-->
+						<th scope="row" th:text="${emp.id}"></th>
+						<td th:text="${emp.nombre}"></td>
+						<td th:text="${emp.apellido}"></td>
+						<td th:text="${emp.nombrePuesto}"></td>
+						<td th:text="${emp.salario}"></td>
+						<td>
+							<!--Botones para editar y eliminar. El th:href indican el path donde redirigen,ambos llevando el campo ID, que guardamos de antes-->
+							<!--El title nos ayuda a mostrar informacion al dejar el raton sobre el boton-->
+							<a class="btn btn-secondary btn-sm" th:href="@{/views/empleados/edit/} + ${emp.id}"
+								th:text="'Editar'" title="Modificar Registro">
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-danger btn-sm" th:href="@{/views/empleados/delete/} + ${emp.id}"
+								th:text="'Eliminar'" title="Eliminar Registro"
+								onClick="return confirm('Esta seguro de eliminar el registro?')">
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<!--Le indicamos al boton que nos lleve a dicho path 'views/clientes/create'-->
+			<a class="btn btn-warning btn-lg" th:href="@{/views/empleados/create}" th:text="'Nuevo Empleado'"
+				title="Crear Nuevo Registro">
+			</a>
+			<br>
+		</div>
+		<br>
+		<footer th:replace="plantilla/template :: footer"></footer>
+	</div>
+</body>
+
+</html>
